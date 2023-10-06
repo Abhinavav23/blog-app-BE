@@ -50,7 +50,17 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-module.exports = { createUser, loginUser, getUserDetails };
+const getMyBlogs = async (req, res) => {
+  const { userId } = req;
+  try {
+    const { blog } = await User.findById(userId).select({ blog: 1 });
+    res.status(200).json({ status: "success", blogList: blog });
+  } catch (err) {
+    res.status(500).json({ status: "failed", message: err.message });
+  }
+};
+
+module.exports = { createUser, loginUser, getUserDetails, getMyBlogs };
 
 // 100 --> informational
 // 200 --> success
