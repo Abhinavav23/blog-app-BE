@@ -5,15 +5,21 @@ const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
   const { password } = req.body;
-  const hashedPassword = bcrypt.hashSync(password, 10);
-  const user = req.body;
-  user.password = hashedPassword;
-
-  try {
-    const userData = await User.create(user);
-    res.status(201).json({ status: "success", data: userData });
-  } catch (err) {
-    res.status(400).json({ status: "fail", error: err.message });
+  console.log("password", password);
+  if (password) {
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const user = req.body;
+    user.password = hashedPassword;
+    try {
+      const userData = await User.create(user);
+      res.status(201).json({ status: "success", data: userData });
+    } catch (err) {
+      console.log('inside catch');
+      res.status(400).json({ status: "fail", error: err.message });
+    }
+  } else {
+    console.log('inside else');
+    res.status(400).json({ status: "fail", error: "data not available" });
   }
 };
 

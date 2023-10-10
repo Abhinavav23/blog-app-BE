@@ -43,7 +43,7 @@ const blogSchema = new Schema({
       ref: "Comment",
     },
   ],
-});
+}, {versionKey: false});
 
 const Blog = mongoose.model("blog", blogSchema);
 

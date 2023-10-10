@@ -2,6 +2,16 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+    minLength: 3,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    minLength: 3,
+  },
   username: {
     type: String,
     required: true,
@@ -25,7 +35,7 @@ const userSchema = new Schema({
       ref: "Blog",
     },
   ],
-});
+}, {versionKey: false, timestamps: true});
 
 const User = mongoose.model("users", userSchema);
 

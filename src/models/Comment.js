@@ -17,7 +17,7 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Blog",
   },
-});
+}, {versionKey: false});
 
 const Comment = mongoose.model("comments", commentSchema);
 
