@@ -35,18 +35,22 @@ const readBlog = async (req, res) => {
   const { blogId } = req.params;
   try {
     const blog = await Blog.findById(blogId)
-    // .populate({path: "user", model: "users", populate: {path: "blog", model: "blog"}})
-    .populate({path: "comments", model: "comments"})
+      // .populate({path: "user", model: "users", populate: {path: "blog", model: "blog"}})
+      .populate({ path: "comments", model: "comments" });
     // .populate({path: "votedBy", model: "users"})
     res.status(200).json({ status: "success", data: blog });
-  } catch(err) {
+  } catch (err) {
     res.status(500).json({ status: "failed", message: err.message });
   }
 };
 
 const readAllBlogs = async (req, res) => {
   try {
-    const blogList = await Blog.find();
+    const blogList = await Blog.find().select({
+      title: 1,
+      username: 1,
+      imageUrl: 1,
+    });
     res.status(200).json({ status: "success", data: blogList });
   } catch (err) {
     res.status(500).json({ status: "failed", message: err.message });

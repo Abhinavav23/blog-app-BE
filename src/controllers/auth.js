@@ -12,13 +12,15 @@ const createUser = async (req, res) => {
     user.password = hashedPassword;
     try {
       const userData = await User.create(user);
-      res.status(201).json({ status: "success", data: userData });
+      res
+        .status(201)
+        .json({ status: "success", message: "user created successfully" });
     } catch (err) {
-      console.log('inside catch');
+      console.log("inside catch");
       res.status(400).json({ status: "fail", error: err.message });
     }
   } else {
-    console.log('inside else');
+    console.log("inside else");
     res.status(400).json({ status: "fail", error: "data not available" });
   }
 };

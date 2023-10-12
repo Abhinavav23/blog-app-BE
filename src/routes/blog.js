@@ -14,7 +14,7 @@ const { isLoggedInUser } = require("../middlewares/authMiddleware");
 // creating a new blog
 router.post("/new", isLoggedInUser, createBlog);
 // read all blogs
-router.get("/all", readAllBlogs);
+router.get("/all", isLoggedInUser, readAllBlogs);
 // reading a single blog
 router.get("/read/:blogId", readBlog);
 // updating a blog
