@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
   const { password } = req.body;
-  console.log("password", password);
   if (password) {
     const hashedPassword = bcrypt.hashSync(password, 10);
     const user = req.body;
@@ -16,11 +15,9 @@ const createUser = async (req, res) => {
         .status(201)
         .json({ status: "success", message: "user created successfully" });
     } catch (err) {
-      console.log("inside catch");
       res.status(400).json({ status: "fail", error: err.message });
     }
   } else {
-    console.log("inside else");
     res.status(400).json({ status: "fail", error: "data not available" });
   }
 };
@@ -61,7 +58,9 @@ const getUserDetails = async (req, res) => {
 const getMyBlogs = async (req, res) => {
   const { userId } = req;
   try {
-    const { blog } = await User.findById(userId).select({ blog: 1 });
+    const { blog } = await User.findById(userId)
+      .select({ blog: 1 })
+      .populate({ path: "blog", model: "blog" });
     res.status(200).json({ status: "success", blogList: blog });
   } catch (err) {
     res.status(500).json({ status: "failed", message: err.message });

@@ -118,8 +118,6 @@ const voteForBlog = async (req, res) => {
   const { blogId } = req.params;
   const { voteType } = req.query;
   const { userId } = req;
-  console.log("voteType", voteType);
-  console.log("blogId", blogId);
   try {
     // if(voteType === 'upVote'){
     //   await Blog.findByIdAndUpdate(blogId, {$inc : {upVote: 1}, $push: {votedBy: userId}})
@@ -133,7 +131,6 @@ const voteForBlog = async (req, res) => {
       $inc: { [voteType]: 1 },
       $push: { votedBy: userId },
     });
-    console.log("updatedBlog", updatedBlog);
     res
       .status(200)
       .json({ status: "successful", message: `${voteType} successful` });
